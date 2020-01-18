@@ -1,39 +1,48 @@
-int main(int argc, char const *argv[])
-{
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main(int argc, char const* argv[]){
+	// Variable Delarations
  	ifstream fin;
  	ofstream fout;
+	string arg1;
+	string arg2;
 	
-	// check if there are enough arguments
-	
+	// assigning arguments
+	if (argc == 3){
+		arg1 = argv[1];
+		arg2 = argv[2];
+	}
+	else{
+		cerr << "wrong arguments" << endl;
+		return 1;
+	}
 	
 	// open the first file
- 	
-	char c;
-
- 	if (fin.fail()) // check if it is successful 
- 	{
- 		cerr << " Cannot open the input file!" << endl;
- 		return 1;
- 	}
- 	
-
-	// open the second file
+	fin.open(arg1);
+	fout.open(arg2);
 	
- 	if (fout.fail())
- 	{
- 		cerr << " Cannot open the output file!" << endl;
- 		return 1;
- 	}
- 	
- 	while(fin.get(c)) 
-	{
-		fout << c;
+	if (fin.fail()){
+		cerr << "Can not open file" << endl;
+		return 1;
 	}
- 	
+	
+	if (fout.fail()){
+		cerr << "Can not open output file" << endl;
+		return 1;
+	}
+	
+	while (!fin.eof()){
+		char character;
+		fin.get(character);
+		fout << character;
+	}
+	
  	fin.close(); 
-
+	
  	fout.close();
-
- 	 return 0;
-
- } 
+	
+	return 0;
+}
